@@ -69,7 +69,7 @@ public class PositionController {
                 HttpMethod.POST,
                 new HttpEntity<>(positionPosting),
                 new ParameterizedTypeReference<Position>(){});
-        return "Position posted successfully";
+        return "Position created successfully";
 
     }
 }

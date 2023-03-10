@@ -17,6 +17,6 @@ public class HomeController {
 		// This is useful for debugging
 		// When having multiple instance of gallery service running at different ports.
 		// We load balance among them, and display which instance received the request.
-		return "Hello from Gateway Service running at port: " + env.getProperty("local.server.port");
+		return "Gateway Service is running at port: " + env.getProperty("local.server.port");
 	}
 }

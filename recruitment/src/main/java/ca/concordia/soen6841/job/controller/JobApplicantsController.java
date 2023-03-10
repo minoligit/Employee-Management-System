@@ -47,7 +47,7 @@ public class JobApplicantsController {
                 HttpMethod.POST,
                 new HttpEntity<>(jobPosting),
                 new ParameterizedTypeReference<String>(){});
-        return "Job applicant posted successfully";
+        return "Job applicant created successfully";
 
     }
 
