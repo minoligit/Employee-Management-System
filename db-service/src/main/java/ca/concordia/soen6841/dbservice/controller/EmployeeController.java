@@ -2,13 +2,9 @@ package ca.concordia.soen6841.dbservice.controller;
 
 import ca.concordia.soen6841.dbservice.exceptions.EmployeeNotFoundException;
 import ca.concordia.soen6841.dbservice.model.Employee;
-import ca.concordia.soen6841.dbservice.model.Invoice;
-import ca.concordia.soen6841.dbservice.model.Tax;
 import ca.concordia.soen6841.dbservice.payloads.CustomResponse;
 import ca.concordia.soen6841.dbservice.pojo.Salary;
 import ca.concordia.soen6841.dbservice.repository.EmployeeRepository;
-import ca.concordia.soen6841.dbservice.repository.InvoiceRepository;
-import ca.concordia.soen6841.dbservice.repository.TaxRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
@@ -19,12 +15,6 @@ import java.util.List;
 public class EmployeeController {
     @Autowired
     private EmployeeRepository employeeRepository;
-
-    @Autowired
-    private TaxRepository taxRepository;
-
-    @Autowired
-    private InvoiceRepository invoiceRepository;
 
     @GetMapping("/")
     public List<Employee> getEmployee() {
@@ -77,22 +67,5 @@ public class EmployeeController {
         response.setMessage("Salary added successfully");
         return response;
     }
-
-    @GetMapping("/invoice/{id}")
-    public CustomResponse<Invoice> generateInvoice(@PathVariable(value = "id", required = true) Long id) {
-        Employee employee = employeeRepository.findById(id)
-                .orElseThrow(() -> new EmployeeNotFoundException(id));
-        Tax tax = taxRepository.findByProvinceAndSalary(employee.getProvince(), employee.getSalary());
-        Long totalSalary = ( employee.getSalary() ) - (employee.getSalary() * tax.getFederalTax() / 100 ) +
-                ( employee.getSalary() * tax.getProvinceTax() / 100 ) +
-                ( employee.getBonus());
-        Invoice invoice =  new Invoice();
-        invoice.setSalaryAfterTax(totalSalary);
-        invoice.setEmployee(employee);
-        invoice.setTax(tax);
-        CustomResponse<Invoice> response =  new CustomResponse<>();
-        response.setData(invoiceRepository.save(invoice));
-        response.setMessage("Invoice generated successfully");
-        return response;
-    }
+    
 }

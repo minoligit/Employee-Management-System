@@ -8,7 +8,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "Employee")
-public class Employee extends AuditModel{
+public class Employee {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")

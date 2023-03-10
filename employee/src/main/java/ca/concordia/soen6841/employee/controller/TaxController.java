@@ -19,7 +19,7 @@ public class TaxController {
         RestTemplate restTemplate = new RestTemplate();
         ResponseEntity<List<Tax>> response = restTemplate.exchange(
                 "http://localhost:8700/tax/",
-                HttpMethod.GET,
+                HttpMethod.GET, 
                 null,
                 new ParameterizedTypeReference<List<Tax>>(){});
         return response.getBody();
